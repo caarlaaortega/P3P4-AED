@@ -295,7 +295,7 @@ Obtén la versión _tidy_ del conjunto de datos `weather` utilizando las funcion
 clima <- raw %>% 
   # juntamos todos los días en una variable dia
   pivot_longer(cols = 5:35, names_to = 'dia', values_to = 'temperatura',
-               names_prefix = 'd') %>%
+               names_prefix = 'd', values_drop_na = TRUE) %>%
   # separamos la columna element en dos columnas, tmin y tmax
   pivot_wider(names_from = element, 
               values_from = temperatura) %>%
