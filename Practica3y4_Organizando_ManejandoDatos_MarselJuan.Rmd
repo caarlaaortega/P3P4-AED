@@ -351,7 +351,7 @@ Muestra las primeras muestras de ambos data frames para hacerte una idea de las 
 # Vuelos:
 head(flights)
 # Aviones: 
-head(planes)
+head(planes, 30)
 ```
 En el dataframe de vuelos (flights) se cuenta con 336776 instancias del año del vuelo, el día y el mes (potencialmente unibles con tidyr), la hora de salida, la hora de salida que se había programado, el retraso en la salida, la hora de llegada, la hora de llegada programada, el retraso en la llegada, el número de vuelo, el carrier, características generales del vuelo, el destino, el tiempo de vuelo, la distancia, horas, minutos y una variable time_hour que es dificil de interpretar de primeras. En definitiva, muestra las características de un vuelo. 
 
@@ -364,10 +364,23 @@ En nuestro estudio queremos aplicar una serie de criterios de exclusión sobre l
 * Nota: Revisar el uso de la función filter vista en clase y tener en cuenta los operadores de comparación: igual ==, distinto !=, mayor >, mayor o igual >=, menor <, menor o igual <=.
 
 ```{r }
+library(dplyr)
+planes$manufacturer <- as.factor(planes$manufacturer)
+levels(planes$manufacturer)
+planes$manufacturer <- as.character(planes$manufacturer)
 
-
-
+planes.f <- planes %>%
+  # filtramos eliminando los del fabricante mcdonnel douglas, todos ellos
+  filter(!grepl('MCDONNELL DOUGLAS', manufacturer)) %>%
+  # seleccionamos los aviones que tienen asientos entre 90 y 210
+  filter(seats >= 90 & seats <= 210) %>% 
+  mutate(manufacturer = case_when(grepl("AIRBUS", manufacturer) ~ "AIRBUS COMP",
+      TRUE ~ manufacturer))
+  
+head(planes.f)
 ```
+Podemos observar, al pasar a factor, que hay varias denominaciones de esta compañía, que son: 
+MCDONNELL DOUGLAS, CORPORATION, AIRCRAFT CO, por lo que para hacer el filtrado deberemos filtrar teniendo en cuenta que contenga MCDONNEL DOUGLAS.
 
 
 ### Ejercicio 7
@@ -375,8 +388,9 @@ En nuestro estudio queremos aplicar una serie de criterios de exclusión sobre l
 Crea un data frame denominado `flights.f` que contenga los vuelos que involucren a los aviones presentes en el data frame `planes.f`. Para ello utiliza algunas de las funciones de **XXX_join** y la variable `tailnum` que es común en ambos data frames. 
 
 ```{r }
-
-
+flights.f <- flights %>%
+  inner_join(flights, planes, by = 'tailnum')
+head(flights.f)
 ```
 
 ### Ejercicio 8
