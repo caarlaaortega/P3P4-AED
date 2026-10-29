@@ -2,15 +2,15 @@
 title: "Práctica 3 y 4. Preparación y manejo de Datos"
 subtitle: "Análisis Exploratorio de Datos, Máster en Ciencia de Datos - UV"
 output:
+  pdf_document:
+    toc: yes
+    toc_depth: 3
+    number_sections: no
   html_document:
     echo: yes
     number_sections: no
     theme: lumen
     toc: yes
-  pdf_document:
-    toc: yes
-    toc_depth: 3
-    number_sections: no
 ---
 
 ```{r setup, cache=F, echo=F, message=F, warning=F, tidy=F}
@@ -425,7 +425,7 @@ Incorpora una nueva variable a `flights` denominado `Full_Date` que sea de tipo 
 ```{r }
 head(flights)
 flights <- flights %>%
-  unite('full_date', day, month, year, sep='-', remove = TRUE)
+  unite('full_date', day, month, year.x, sep='-', remove = TRUE)
 head(flights)
 
 ```
@@ -460,9 +460,15 @@ Separa los datos _tidy_ que teníamos en el ejercicio 2 en dos tablas (data fram
 Opcionalmente se puede crear un identificador, `id`, asociado al nombre de la canción (`track`), y en la tabla de ranking solo usaremos este identificador en lugar del nombre de la canción.
 
 ```{r}
+# Cargamos los datos: 
+load('data/billboard.Rdata')
+head(clean)
+# Separamos los datos tidy en los dos dataframes:
+canciones <- unique(data.frame(clean$artist, clean$time, clean$track))
+ranking <- unique(data.frame(clean$rank, clean$track, clean$week))
 
-
-
+canciones
+ranking
 ```
 
 ## TidyR. Una única unidad de observación almacenada en varias tablas
@@ -482,8 +488,10 @@ Esto se puede hacer fácilmente con las librerías `plyr` y `dplyr`.
 En la librería _tidyr_ hay varios conjuntos de datos. **table1** es un conjunto _tidy_ pero **table5** no lo es. Realiza las operaciones necesarias para obtener **table1** a partir de **table5**. También deben coincidir los tipos de datos de las columnas. 
 
 ```{r}
-
-
+head(table1)
+head(table5)
+tabla_nueva <- table5 %>%
+  
 ```
 
 ## DPLYR
