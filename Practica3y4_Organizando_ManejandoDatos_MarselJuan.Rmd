@@ -261,7 +261,13 @@ Para pasar a formato _tidy_ necesitamos realizar dos operaciones en este caso. E
 Convierte el conjunto de datos TB en _tidy_ utilizando `gather` y `separate`.
 
 ```{r}
-
+# Vamos a hacer dos operaciones: 
+# En primer lugar juntamos todas las columnas 'm...'y 'f...' y a los conteos los 
+# llamaremos casos: 
+tuberculosis_01 %>% gather(raw, key = 'myf', value = 'casos', -c(country, year))
+# En segundo lugar vamos a separar las columnas myf en sexo y edad: 
+tuberculosis <- separate(tuberculosis_01, myf, c('sexo', 'edad'), sep = 1)
+head(tuberculosis)
 ```
 
 
