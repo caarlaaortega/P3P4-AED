@@ -490,7 +490,11 @@ En la librería _tidyr_ hay varios conjuntos de datos. **table1** es un conjunto
 ```{r}
 head(table1)
 head(table5)
-tabla_nueva <- table5 %>%
+tabla_nueva <- table5 %>% 
+  unite('year', century, year, sep='') %>%
+  separate(rate, c('cases', 'population'))
+
+head(tabla_nueva)
   
 ```
 
