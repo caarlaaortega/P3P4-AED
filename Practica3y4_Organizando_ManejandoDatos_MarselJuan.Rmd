@@ -348,8 +348,14 @@ load("./data/VuelosNY.Rdata")
 Muestra las primeras muestras de ambos data frames para hacerte una idea de las variables que contienen. ¿Qué diferencia existe entre la información mostrada en ambos data frames?
 
 ```{r }
-
+# Vuelos:
+head(flights)
+# Aviones: 
+head(planes)
 ```
+En el dataframe de vuelos (flights) se cuenta con 336776 instancias del año del vuelo, el día y el mes (potencialmente unibles con tidyr), la hora de salida, la hora de salida que se había programado, el retraso en la salida, la hora de llegada, la hora de llegada programada, el retraso en la llegada, el número de vuelo, el carrier, características generales del vuelo, el destino, el tiempo de vuelo, la distancia, horas, minutos y una variable time_hour que es dificil de interpretar de primeras. En definitiva, muestra las características de un vuelo. 
+
+En el datframe de aviones (planes) se cuenta con 3322 instancias de aviones con 9 variables asociadas, que son el número de cola, el año, el tipo, el fabricante, el modelo, el tipo de motores y su cantidad, el número de asientos y la velocidad a la que pueden llegar. En definitiva, se trata de las características de 9 aviones disponibles, que estarán asociados a un determinado vuelo.  
 
 ### Ejercicio 6
 
